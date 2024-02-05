@@ -3,7 +3,7 @@ class Config:
     MODEL = "gpt-35-turbo"
     SITE = "critical-work.com"
     START_PAGE = "mission"
-    WELCOME = "Benvenuto al sito Web di Ambra Danesin."
+    WELCOME = "Un caloroso benvenuto dall'assistente virtuale di Ambra Danesin."
     ROLE = """
     You are Ambra Danesin, a recruiter who cares of people.
     You always advice users to tell to you his email so you can contact you to help with your job needs.
@@ -12,6 +12,12 @@ class Config:
     EMAIL = "michele@nuvolaris.io"
     THANKS = "Grazie di avermi fornito la tua email, ti contatterò presto."
     ERROR = "Purtroppo sembra che ci sia qualche problema a registrare la tua email."
+    SANITIZER = {
+        "tags": {
+            "a", "h1", "h2", "h3", "strong", "em", "p", "ul", "ol",
+            "li", "br", "sub", "sup", "hr", "img"
+        }
+    }
 
 ## options
 #--web true
@@ -28,6 +34,8 @@ import smtplib, email
 import requests
 import traceback
 from openai import AzureOpenAI
+from html_sanitizer import Sanitizer
+
 
 class EmailServer:
     def __init__(self, args):
@@ -134,6 +142,7 @@ If it is OK just say 'OK', otherwise explain in italian what is wrong.
 class Website:
     def __init__(self):
         self.name2id = {}
+        self.sanitizer = Sanitizer(Config.SANITIZER)
         try: 
             url = f"https://{Config.SITE}/wp-json/wp/v2/pages"
             content = requests.get(url).content.decode("UTF-8")
@@ -145,7 +154,7 @@ class Website:
         id = self.name2id.get(name, -1)
         if id == -1:
             print(f"cannot find page {name}")
-            return None
+            id = self.name2id[Config.START_PAGE]
     
         try:  
             url = f"https://{Config.SITE}/wp-json/wp/v2/pages/{id}"
@@ -153,7 +162,9 @@ class Website:
             content = requests.get(url).content
             #print(content)
             page = json.loads(content)
-            return page['content']['rendered']
+            html =  page['content']['rendered']
+            html = self.sanitizer.sanitize(html)
+            return html
         except:
             traceback.print_exc()
             return None
@@ -181,39 +192,50 @@ def main(args):
         if html:
             res['html'] = html
         else:
-            res['title'] = "Welcome"
+            res['title'] = "Benvenuto."
             res['message'] =  Config.WELCOME
         return {"body": res }
     
-    
+
     Email.add_message(f">>> {input}")
     print(input)
-    output = Email.check_email_and_notify(input)
-    if output is None:
-        output = AI.ask(input)
-
-    if output is None:
-        output = "Non posso rispondere a questa domanda..."
-
-    Email.add_message(f" <<< {output}")
     
-
-    res['output'] = output
+    output = Email.check_email_and_notify(input)
+    if output:
+        res['output'] = output
+        
+        res['title'] = "Grazie!"
+        res['message'] = "Grazie per avermi scelto, ti ricontatterò il più presto possibile."
+        return {"body": res}
     
     page = AI.identify_topic(Web.topics(), input)
     print("topic ", page)
+    role = Config.ROLE
+    
     html = Web.get_page_content_by_name(page)
     if html:
         res['html'] = html
+        from bs4 import BeautifulSoup
+        role += BeautifulSoup(page, 'html.parser').get_text()
         
+    output = AI.ask(input, role=role)
+    if output is None:
+        output = "Non posso rispondere a questa domanda... Forse può essere fraintesa. Puoi riformularla?"
+
+    Email.add_message(f" <<< {output}")
+    res['output'] = output
+
     return {"body": res }
 
 """
-%cd packages/openai
+%cd packages/openai/ambra
 from wordpress import *
 
 Web = Website()
-Web.get_page_content_by_name("mission")
+page = Web.get_page_content_by_name("mission") ; print(page)
+from html_sanitizer import Sanitizer
+sanitizer = Sanitizer()
+
 Web.topics()
 
 AI = ChatBot(args)
@@ -222,7 +244,7 @@ AI.ask("who are you?", role="you are sailor moon")
 topics = Web.topics() ; print(topics)
 page = AI.identify_topic(topics, "di cosa ti occupi") ; print(page)
 
-Web.get_page_content_by_name(page)
+data = Web.get_page_content_by_name(page)
 
 Email = EmailServer(args)
 Email.send_mail("michele@sciabarra.com", "Contact", "How are you?")
