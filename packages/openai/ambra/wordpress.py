@@ -12,12 +12,8 @@ class Config:
     EMAIL = "michele@nuvolaris.io"
     THANKS = "Grazie di avermi fornito la tua email, ti contatterò presto."
     ERROR = "Purtroppo sembra che ci sia qualche problema a registrare la tua email."
-    SANITIZER = {
-        "tags": {
-            "a", "h1", "h2", "h3", "strong", "em", "p", "ul", "ol",
-            "li", "br", "sub", "sup", "hr", "img"
-        }
-    }
+    OUT_OF_SERVICE = "Ciao, purtroppo per oggi le batterie sono esaurite e quindi sono andato a ricaricarmi. Per oggi non posso più risponderti, torna domani."
+    
 
 ## options
 #--web true
@@ -118,7 +114,7 @@ class ChatBot:
                 content = comp.choices[0].message.content
                 return content
         except Exception as e:
-            print(e)
+            return Config.OUT_OF_SERVICE
         
         return None
 
@@ -142,7 +138,7 @@ If it is OK just say 'OK', otherwise explain in italian what is wrong.
 class Website:
     def __init__(self):
         self.name2id = {}
-        self.sanitizer = Sanitizer(Config.SANITIZER)
+        self.sanitizer = Sanitizer()
         try: 
             url = f"https://{Config.SITE}/wp-json/wp/v2/pages"
             content = requests.get(url).content.decode("UTF-8")

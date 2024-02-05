@@ -12,10 +12,6 @@ def main(_):
                 "name": "OpenAI",
                 "url": "openai/chat"
             },
-            {
-                "name": "Wordpress",
-                "url": "openai/wordpress"
-            },
             { 
                 "name": "Demo", 
                 "url": "mastrogpt/demo",
