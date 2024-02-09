@@ -40,7 +40,6 @@ tasks:
         - "packages/{{.A}}.zip"
 
 
-
     build:zip:
         requires: { vars: [A] }
         cmds:
