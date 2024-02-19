@@ -1,5 +1,5 @@
-//--web true
 //--kind nodejs:default
+//--web true
 
 const hello = require("./hello")
 
