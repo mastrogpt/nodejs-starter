@@ -23,9 +23,7 @@ async function main(args) {
         let r = await AI.getChatCompletions(model, request);
 
     } 
-  
-    AI1.models.list()
-    .list().model_dump()
+
     return { models: data }
 }
 
