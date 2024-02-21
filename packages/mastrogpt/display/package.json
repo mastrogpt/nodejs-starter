@@ -1,15 +1,16 @@
 {
-  "name": "withreqsjs",
+  "name": "display",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Michele Sciabarra",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "marked": "^12.0.0"
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "chess.js": "^1.0.0-beta.7",
+    "mustache.js": "^1.0.0"
   }
 }

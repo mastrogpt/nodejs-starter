@@ -6,23 +6,21 @@
 const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
 
 async function main(args) {
-
-    const key =  args.OPENAI_API_KEY || process.env.OPENAI_API_KEY
-    const host = args.OPENAI_API_HOST ||  process.env.OPENAI_API_HOST
-    const model =  "gpt-35-turbo"
-    const AI  = new OpenAIClient(host, new AzureKeyCredential(key))
+    const key = args.OPENAI_API_KEY || process.env.OPENAI_API_KEY
+    const host = args.OPENAI_API_HOST || process.env.OPENAI_API_HOST
+    const model = "gpt-35-turbo"
+    const AI = new OpenAIClient(host, new AzureKeyCredential(key))
     const input = args.input || ""
-    let output = "Please provide some input."
-    if(input != "") {
+    if (input != "") {
         //const { id, created, choices, usage } =
-        let request= [
+        let request = [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: input },
         ]
-        
+
         let r = await AI.getChatCompletions(model, request);
 
-    } 
+    }
 
     return { models: data }
 }
