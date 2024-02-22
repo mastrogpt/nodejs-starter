@@ -1,5 +1,5 @@
 //--web true
-//--kind nodejs:default
+//--docker ghcr.io/nuvolaris/runtime-nodejs-v21:3.1.0-mastrogpt.2402201748
 //--param OPENAI_API_KEY $OPENAI_API_KEY
 //--param OPENAI_API_HOST $OPENAI_API_HOST
 
@@ -24,6 +24,3 @@ async function main(args) {
 
     return { models: data }
 }
-
-
-

@@ -1,3 +1,6 @@
+//--web true
+//--docker ghcr.io/nuvolaris/runtime-nodejs-v21:3.1.0-mastrogpt.2402201748
+
 const mustache = require('mustache.js');
 const chess = require('chess.js');
 const Chessboard = require('chessboardjs');

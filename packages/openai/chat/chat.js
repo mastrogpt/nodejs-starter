@@ -1,5 +1,7 @@
+//--web true
+//--param OPENAI_API_HOST $OPENAI_API_HOST
+//--docker ghcr.io/nuvolaris/runtime-nodejs-v21:3.1.0-mastrogpt.2402201748
 const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
-
 
 const ROLE = `
 When requested to write code, pick Javascript.
