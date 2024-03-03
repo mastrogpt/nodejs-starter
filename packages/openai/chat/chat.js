@@ -64,7 +64,7 @@ function extract(text) {
     return res;
 }
 
-export async function chat(args) {
+async function chat(args) {
     const { OPENAI_API_KEY, OPENAI_API_HOST } = args;
     AI = new OpenAIClient(OPENAI_API_HOST, new AzureKeyCredential(OPENAI_API_KEY))
 
@@ -83,3 +83,5 @@ export async function chat(args) {
 
     return { "body": res };
 }
+
+module.exports = chat
