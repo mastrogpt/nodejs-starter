@@ -30,18 +30,13 @@ You can run Nuvolaris Starter:
 
 You are ready to develop!
 
-# Development
+# Developtment
 
-Use:
+Use from the terminal
 
 - `devel` to run a local development environment
 - `deploy` to deploy everything in cloud
 
-There are some other useful commands, type `task` to see them.
+You can also use our extension for using it. 
+ Click on the "nuvolaris" icon and you have the commands available.
 
-# Setup and Config
-
-It is executed automatically when you open a terminal, however there are also the following command you can call directly:
-
-- `task setup`: install everything it is needed
-- `task config`:  asks for username and password and builds `.env`
