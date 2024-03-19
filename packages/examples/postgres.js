@@ -1,5 +1,5 @@
 //--web true
-//--docker ghcr.io/nuvolaris/runtime-nodejs-v21:3.1.0-mastrogpt.2402201748
+//--kind nodejs:default
 //--param POSTGRES_URL $POSTGRES_URL
 
 const { Client } = require('pg')

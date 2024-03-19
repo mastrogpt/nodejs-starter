@@ -1,5 +1,5 @@
 //--web true
-//--docker ghcr.io/nuvolaris/runtime-nodejs-v21:3.1.0-mastrogpt.2402201748
+//--kind nodejs:default
 //--param MINIO_HOST $MINIO_HOST
 //--param MINIO_PORT $MINIO_PORT
 //--param MINIO_ACCESS_KEY $MINIO_ACCESS_KEY
