@@ -6,7 +6,7 @@ const { Client } = require('pg')
 
 async function main(args) {        
     console.log(args.postgres_url);
-    const client = new Client({connectionString:args.postgres_url});
+    const client = new Client({connectionString:args.POSTGRES_URL});
 
     const createTableText = `
     CREATE EXTENSION IF NOT EXISTS "pgcrypto";
