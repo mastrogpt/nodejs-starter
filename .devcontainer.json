@@ -1,6 +1,6 @@
 {
-	"name": "nodejs-starter",
-	"image": "ghcr.io/nuvolaris/devcontainer:3.1.0-mastrogpt.2403011942",
+	"name": "python-starter",
+	"image": "ghcr.io/nuvolaris/devcontainer:3.1.0-mastrogpt.2403171925",
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
 	],
@@ -9,11 +9,10 @@
 	"runArgs": [
 		"--network=host"
 	],
-	"postStartCommand": "nuv ide setup",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"nuvolaris.nuvolaris-vscode-extension",
+				"nuvolaris.nuvolaris-vscode-extension@1.0.2",
 				"ms-python.python"
 			]
 		}
