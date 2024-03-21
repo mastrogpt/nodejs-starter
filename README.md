@@ -20,13 +20,13 @@ You can run Nuvolaris Starter:
 - Install Docker and VScode in your machine
 - Clone this repo
 - Open it in VSCode
-- Press F1  and the "Reopen in Container"
+- Press F1 and then select "Reopen in Container"
 
 # Secrets
 
 - Copy the `.env.example` in `.env`
 - Add your secrets there.
-- Pass the parameters as secrets to your function with `#--param ARGUMENT $VARIABLE`
+- Pass the parameters as secrets to your function with `//--param ARGUMENT $VARIABLE`
 - Read the secrets as function arguments
 
 # Development
