@@ -2,7 +2,7 @@
 //--param REDIS_URL $REDIS_URL
 //--param REDIS_PREFIX $REDIS_PREFIX
 
-async function main(args) {deve
+async function main(args) {
     // connnect to the redis database
     const db = require("redis").createClient({"url":args.REDIS_URL})
     await db.connect()
