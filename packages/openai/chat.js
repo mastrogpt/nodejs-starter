@@ -66,7 +66,7 @@ function extract(text) {
     return res;
 }
 
-async function chat(args) {
+async function main(args) {
 
     const OPENAI_API_KEY = args.OPENAI_API_KEY || process.env.OPENAI_API_KEY
     const OPENAI_API_HOST = args.OPENAI_API_KEY || process.env.OPENAI_API_HOST
@@ -90,4 +90,4 @@ async function chat(args) {
     return { "body": res };
 }
 
-module.exports = chat
+module.exports = main
