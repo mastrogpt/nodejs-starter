@@ -5,7 +5,7 @@ const hello = require("./hello")
 
 function main(args) { 
     return { 
-        body: hello()
+        body: hello(args)
     }
 }
 
