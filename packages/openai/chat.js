@@ -34,7 +34,6 @@ async function ask(input) {
 
 function extract(text) {
     const res = {};
-
     // search for a chess position
     const chessPattern = /(([rnbqkpRNBQKP1-8]{1,8}\/){7}[rnbqkpRNBQKP1-8]{1,8} [bw] (-|K?Q?k?q?) (-|[a-h][36]) \d+ \d+)/g;
     const chessMatches = text.match(chessPattern);
@@ -69,8 +68,7 @@ function extract(text) {
 async function main(args) {
 
     const OPENAI_API_KEY = args.OPENAI_API_KEY || process.env.OPENAI_API_KEY
-    const OPENAI_API_HOST = args.OPENAI_API_KEY || process.env.OPENAI_API_HOST
-
+    const OPENAI_API_HOST = args.OPENAI_API_HOST || process.env.OPENAI_API_HOST
     AI = new OpenAIClient(OPENAI_API_HOST, new AzureKeyCredential(OPENAI_API_KEY))
 
     let res = {};
@@ -87,7 +85,7 @@ async function main(args) {
         }        
     }
 
-    return { "body": res };
+    return { "body":res };
 }
 
 module.exports = main
