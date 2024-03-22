@@ -12,3 +12,5 @@ content/posts/media/
 .user
 packages/*/*.zip
 util/requirements.txt
+package.json
+package-lock.json

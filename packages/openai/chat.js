@@ -24,7 +24,7 @@ function req(msg) {
 }
 
 async function ask(input) {
-    const comp = await AI.getCompletions(MODEL, req(input));
+    const comp = await AI.getChatCompletions(MODEL, req(input));
     if (comp.choices.length > 0) {
         const content = comp.choices[0].message.content;
         return content;
@@ -67,20 +67,24 @@ function extract(text) {
 }
 
 async function chat(args) {
-    const { OPENAI_API_KEY, OPENAI_API_HOST } = args;
+
+    const OPENAI_API_KEY = args.OPENAI_API_KEY || process.env.OPENAI_API_KEY
+    const OPENAI_API_HOST = args.OPENAI_API_KEY || process.env.OPENAI_API_HOST
+
     AI = new OpenAIClient(OPENAI_API_HOST, new AzureKeyCredential(OPENAI_API_KEY))
 
     let res = {};
-    if (!args.input) {
+    let input = args.input || ""
+    if (input != "") {
+        const output = await ask(input);
+        res = extract(output);
+        res['output'] = output;
+    } else {
         res = {
             "output": "Welcome to the OpenAI demo chat",
             "title": "OpenAI Chat",
             "message": "You can chat with OpenAI."
-        };
-    } else {
-        const output = await ask(input);
-        res = extract(output);
-        res['output'] = output;
+        }        
     }
 
     return { "body": res };
